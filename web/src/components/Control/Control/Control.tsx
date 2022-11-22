@@ -1,11 +1,13 @@
-
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { timeTag,  } from 'src/lib/formatters'
+import { timeTag } from 'src/lib/formatters'
 
-import type { DeleteControlMutationVariables, FindControlById } from 'types/graphql'
+import type {
+  DeleteControlMutationVariables,
+  FindControlById,
+} from 'types/graphql'
 
 const DELETE_CONTROL_MUTATION = gql`
   mutation DeleteControlMutation($id: Int!) {
@@ -20,6 +22,12 @@ interface Props {
 }
 
 const Control = ({ control }: Props) => {
+  if (typeof client !== 'undefined') {
+    console.log('client present: ', { client })
+  } else {
+    console.log('no client present')
+  }
+
   const [deleteControl] = useMutation(DELETE_CONTROL_MUTATION, {
     onCompleted: () => {
       toast.success('Control deleted')
@@ -49,22 +57,28 @@ const Control = ({ control }: Props) => {
             <tr>
               <th>Id</th>
               <td>{control.id}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Name</th>
               <td>{control.name}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Description</th>
               <td>{control.description}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Type</th>
               <td>{control.type}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Value</th>
               <td>{control.value}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Created at</th>
               <td>{timeTag(control.createdAt)}</td>
-            </tr><tr>
+            </tr>
+            <tr>
               <th>Updated at</th>
               <td>{timeTag(control.updatedAt)}</td>
             </tr>
