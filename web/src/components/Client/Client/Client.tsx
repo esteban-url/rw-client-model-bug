@@ -1,13 +1,13 @@
+import type {
+  DeleteClientMutationVariables,
+  FindClientById,
+} from 'types/graphql'
+
 import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { timeTag } from 'src/lib/formatters'
-
-import type {
-  DeleteClientMutationVariables,
-  FindClientById,
-} from 'types/graphql'
 
 const DELETE_CLIENT_MUTATION = gql`
   mutation DeleteClientMutation($id: Int!) {
@@ -22,11 +22,8 @@ interface Props {
 }
 
 const Client = ({ client }: Props) => {
-  if (typeof client !== 'undefined') {
-    console.log('client present: ', { client })
-  } else {
-    console.log('no client present')
-  }
+  console.log('oh no', client)
+
   const [deleteClient] = useMutation(DELETE_CLIENT_MUTATION, {
     onCompleted: () => {
       toast.success('Client deleted')
